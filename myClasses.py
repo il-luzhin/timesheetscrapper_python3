@@ -9,6 +9,21 @@ import re
 
 # imported from local directories
 
+class timesheet:
+
+    def __init__(self, name_row, name_column, start_data, end_data):
+        self.name_row = name_row
+        self.name_column = name_column
+        self.start_data = start_data
+        self.end_data = end_data
+
+
+
+
+
+
+
+
 class salariedHead:
 
     headCount = 0
@@ -47,6 +62,12 @@ class searchDict(dict):
 
     def search_for_match(self, event):
         return (self[key] for key in self if re.match(key, event))
+
+
+
+
+class timesheetloop(self):
+    pass
 
 
 

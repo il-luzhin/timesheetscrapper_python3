@@ -75,53 +75,6 @@ def write_hrs(hrsread_sheet, hrsr_row, hrsr_col, hrsnew_sheet, hrsw_row, hrsw_co
 
 def main():
 
-    # load the write workbook
-    write_book = xlrd.open_workbook(cfg.write_file)
-    write_sheet = write_book.sheet_by_index(0)
-    new_book = copy(write_book)
-    new_sheet = new_book.get_sheet(0)
-
-    # set up the column headers
-    col_names(new_sheet)
-
-    #now that the headers are in, set the first write row to be row #2
-    w_row = 1
-    print(f"Row number {w_row + 1} appears to be the first available row in the write_book.")
-    print("Does that sound correct? RETURN for yes, CTRL+C for no.")
-    input()
-
-    # create a list of the read_books
-    read_list = os.listdir(cfg.dir)
-    print(f"We need to read approximately {len(read_list)} files")
-    print("Are you ready to read? RETURN for yes, CTRL+C for no.")
-    input()
-
-    # a loop to iterate through the read_list
-    i = 0  # file list position number
-    for i in range(len(read_list)):
-        read_file = (cfg.dir + '\\' + read_list[i])
-        print(read_file)
-        read_book = xlrd.open_workbook(read_file)
-        read_sheet = read_book.sheet_by_index(0)
-
-        # is this actually a timesheet? And which one is it?
-        if read_sheet.cell_value(7, 0) == 'SUNDAY':
-            print("This timesheet was designed in 2011. Begin data scrape")
-            tf11.timesheet2011()
-        elif read_sheet.cell_value(19, 0) == 'SUNDAY':
-            print("This timesheet was designed in 2015. Begin data scrape")
-
-            r_row = 19  # r_row is now the read_book row
-
-            # A loop to iterate through the time slots one at a time
-            for r_row in range(19, 68):
-                # Find the first slot with data
-                if read_sheet.cell_type(r_row, 2) != 0:
-                    print("writing data")
-
-                    # write the HeadAlphaID
-                    data = 'z'
-                    new_sheet.write(w_row, 1, data)
 
                     # write persons employee number
                     data = read_sheet.cell_value(15, 2)
