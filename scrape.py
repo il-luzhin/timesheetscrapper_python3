@@ -8,46 +8,11 @@ import os
 
 # imported from third party repos
 import xlrd
-from xlutils.copy import copy
+
 
 # imported from local directories
 import config as cfg
 import kris_fix as kf # added when kris broke the scrapper
-from myClasses import searchDict
-import timesheet2011 as tf11
-import casualtimesheet as cas
-
-# this method will create the columns in the new .xls sheet
-def col_names(col_new_sheet):
-    column_names = ["Shift", "HeadIDLetter", "HeadIDNumber",
-                    "Date", "InTime", "OutTime",
-                    "EventYrID", "EventID", "Reg",
-                    "OT", "Double", "Acct",
-                    "Blackscall", "MP"]
-
-    for i in range(len(column_names)):
-        col_new_sheet.write(0,i, column_names[i])
-
-# this method will write the date to the new .xls sheet
-def write_date(dateread_sheet, dater_row, datenew_sheet, datew_row):
-    data = dateread_sheet.cell_value(dater_row, 0)
-    shift_date_tuple = xlrd.xldate_as_tuple(data, 1)
-    day = f"{shift_date_tuple[2]}"
-    month = f"{shift_date_tuple[1]}"
-    year = f"{shift_date_tuple[0]}"
-    shift_date = day + '/' + month + '/' + year
-    datenew_sheet.write(datew_row, 3, shift_date)
-    print(shift_date)
-
-# this is a loop, to iterate over the write_date method
-def date_loop(read_row, write_row, readsheet2, newsheet2):
-    i = 19
-    while i < 70:
-        if ((read_row >= i) and (read_row <= i + 6)):
-            write_date(readsheet2, i + 1, newsheet2, write_row)
-            i += 7
-        else:
-            i += 7
 
 # this method will write the time to the new .xls sheet
 def write_time(timeread_sheet, timer_row,timer_col, timenew_sheet, timew_row):
@@ -75,15 +40,6 @@ def write_hrs(hrsread_sheet, hrsr_row, hrsr_col, hrsnew_sheet, hrsw_row, hrsw_co
 
 def main():
 
-
-                    # write persons employee number
-                    data = read_sheet.cell_value(15, 2)
-                    my_dict = searchDict(cfg.dict_heads)
-                    for head_num in my_dict.search_for_match(data):
-                        new_sheet.write(w_row, 2, head_num)
-
-                    #write date
-                    date_loop(r_row, w_row, read_sheet, new_sheet)
 
                     # write time in
                     if head_num == 3:  # if it's kris, then...

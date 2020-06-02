@@ -6,53 +6,21 @@ Please see each file for more info
 # imported from standard library
 import pandas as pd
 
+
 # imported from third party repos
 
 # imported from local directories
 import config as cfg
 import myClasses as mycls
 
-def scrape(timesheet, scrape_sheet):
-
-    mylist = []
-
-    r_row = timesheet.start_data # r_row is now the read_book row
-
-    # A loop to iterate through the time slots one at a time
-    for r_row in range(timesheet.start_data, timesheet.end_data):
-        # Find the first slot with data
-        if scrape_sheet.cell_type(r_row, 2) != 0:
-            print("writing data")
-
-            # write the HeadAlphaID
-            data = 'z'
-            mylist.append(data)
-
-            # write persons employee number
-            data = scrape_sheet.cell_value(timesheet.name_row, timesheet.name_column)
-            my_dict = searchDict(cfg.dict_heads)
-            for head_num in my_dict.search_for_match(data):
-                mylist.append(head_num)
-
-
-
 def main():
 
     # create the df
-    cols_to_use = ['Shift',
-                   'HeadIDLetter',
-                   'HeadIDNumber',
-                   'Date',
-                   'InTime',
-                   'OutTime',
-                   'EventYrID',
-                   'EventID',
-                   'Reg',
-                   'OT',
-                   'Double',
-                   'Acct',
-                   'Blackscall',
-                   'MP']
+    cols_to_use = ["Shift", "HeadIDLetter", "HeadIDNumber",
+                    "Date", "InTime", "OutTime",
+                    "EventYrID", "EventID", "Reg",
+                    "OT", "Double", "Acct",
+                    "Blackscall", "MP"]
 
     df_scraped = pd.DataFrames(columns=cols_to_use)
 
